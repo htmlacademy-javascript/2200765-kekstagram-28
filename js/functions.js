@@ -10,3 +10,15 @@ function checkedPolindrom (string) {
 }
 checkedPolindrom ('довод');
 
+function chckedForNumber (string) {
+  const allSymbol = string.replaceAll(' ', '');
+  let onlynumbers = '';
+  for (let i = 0; i < allSymbol.length; i++) {
+    if (Number(allSymbol[i])) {
+      onlynumbers += allSymbol[i];
+    }
+  }
+  return onlynumbers;
+}
+chckedForNumber('3v cs267');
+
