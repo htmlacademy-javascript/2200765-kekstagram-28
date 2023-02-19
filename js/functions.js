@@ -1,7 +1,7 @@
-function checkedLenght (a, b) {
+function checkedLength (a, b) {
   return (a.length > b) ? 'Строка проходит по длине' : 'Строка не проходит по длине';
 }
-checkedLenght('Some string', 4);
+checkedLength('Some string', 4);
 
 function checkedPolindrom (string) {
   for (let i = 0; i < string.length; i++) {
@@ -22,3 +22,15 @@ function chckedForNumber (string) {
 }
 chckedForNumber('3v cs267');
 
+function checkedAll (originalString, minLength, addSymbol) {
+  //Если исходная строка превышает заданную длину, она не должна обрезаться
+  if (originalString.length >= minLength) {
+    return originalString;
+  }
+  //Символы добавляются в начало строки, до заданной длинны
+  for (let i = originalString.length; i < minLength; i++) {
+    originalString = addSymbol + originalString;
+  }
+  return originalString;
+}
+checkedAll('12', 5, '0');
