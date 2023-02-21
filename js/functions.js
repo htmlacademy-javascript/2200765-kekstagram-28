@@ -1,36 +1,35 @@
-function checkedLength (a, b) {
-  return (a.length > b) ? 'Строка проходит по длине' : 'Строка не проходит по длине';
+function checkLength (string, length) {
+  return string.length > length;
 }
-checkedLength('Some string', 4);
+checkLength('Some string', 4);
 
-function checkedPolindrom (string) {
-  for (let i = 0; i < string.length; i++) {
-    return (string[i] === string[string.length - 1]) ? 'Это слово полиндром' : 'Это слово не полиндром';
+function checkPolindrom (string) {
+  const modeString = string.toLowerCase().replaceAll(' ', '');
+  let reverseString = '';
+  for (let i = modeString.length - 1; i >= 0 ; i--) {
+    reverseString = reverseString + modeString.at(i);
   }
+  return reverseString === modeString;
 }
-checkedPolindrom ('довод');
+checkPolindrom ('ДовОд');
 
-function chckedForNumber (string) {
+function getNumber (string) {
   const allSymbol = string.replaceAll(' ', '');
   let onlynumbers = '';
   for (let i = 0; i < allSymbol.length; i++) {
-    if (Number(allSymbol[i])) {
+    if (!Number.isNaN(parseInt(allSymbol[i], 10))) {
       onlynumbers += allSymbol[i];
     }
   }
-  return onlynumbers;
+  return parseInt(onlynumbers, 10);
 }
-chckedForNumber('3v cs267');
+getNumber('3v cs267');
 
-function checkedAll (originalString, minLength, addSymbol) {
-  //Если исходная строка превышает заданную длину, она не должна обрезаться
-  if (originalString.length >= minLength) {
+function checkString (originalString, minLength, addSymbol) {
+  const difference = minLength - originalString.length;
+  if (difference <= 0) {
     return originalString;
   }
-  //Символы добавляются в начало строки, до заданной длинны
-  for (let i = originalString.length; i < minLength; i++) {
-    originalString = addSymbol + originalString;
-  }
-  return originalString;
+  return addSymbol.slice(0, difference % addSymbol.length) + addSymbol.repeat(difference / addSymbol.length) + originalString;
 }
-checkedAll('12', 5, '0');
+checkString('12', 5, '0');
