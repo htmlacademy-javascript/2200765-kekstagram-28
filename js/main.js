@@ -36,32 +36,29 @@ function getRandomInteger (min, max) {
   return Math.floor(result);
 }
 
-/*//удаление повторяющихся
-function createRandomIdFromRangeGenerator (min, max) {
-  const previousValues = [];
+//генератор уникальных идентификаторов
+function createIdGenerator() {
+  let lastGeneratedId = 0;
 
   return function () {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
+    lastGeneratedId += 1;
+    return lastGeneratedId;
   };
-}*/
+}
+
+//переменные для генерации id
+const generatePhotoId = createIdGenerator();
+const generateCommentId = createIdGenerator();
 
 //создание комментария
 const createCommentsPhoto = function () {
-  const generateRandomCommentId = getRandomInteger(1, 100);
+  const CommentId = generateCommentId();
   const randomIdIndexAvatar = getRandomInteger(1, 6);
   const randomIdIndexComment = getRandomInteger(0, TEXT_COMMENT.length - 1);
   const randomIdIndexNames = getRandomInteger(0, NAME_COMMENTATORS.length - 1);
 
   return {
-    id: generateRandomCommentId,
+    id: CommentId,
     avatar: `img/avatar-${ randomIdIndexAvatar }.svg`,
     message: TEXT_COMMENT[randomIdIndexComment],
     name: NAME_COMMENTATORS[randomIdIndexNames],
@@ -70,14 +67,14 @@ const createCommentsPhoto = function () {
 
 //создание описания фотографии
 const createDescriptionPhoto = function () {
-  const generateRandomPhotoId = getRandomInteger(1, 25);
+  const PhotoId = generatePhotoId();
   const randomLikesIndex = getRandomInteger(15, 200);
   const randomDescriptionIndex = getRandomInteger(0, DESCRIPTION_PHOTO.length - 1);
   const randomComment = createCommentsPhoto();
 
   return {
-    id: generateRandomPhotoId,
-    url: `photos/${ generateRandomPhotoId }.jpg`,
+    id: PhotoId,
+    url: `photos/${ PhotoId }.jpg`,
     description: DESCRIPTION_PHOTO[randomDescriptionIndex],
     likes: randomLikesIndex,
     comments: randomComment,
@@ -85,4 +82,6 @@ const createDescriptionPhoto = function () {
 };
 
 const createAllDescription = Array.from({length: COUNT_PHOTO}, createDescriptionPhoto);
+
+// eslint-disable-next-line no-console
 console.log(createAllDescription);
