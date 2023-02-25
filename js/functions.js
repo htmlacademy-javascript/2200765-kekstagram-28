@@ -3,7 +3,7 @@ function checkLength (string, length) {
 }
 checkLength('Some string', 4);
 
-function checkPolindrom (string) {
+function checkPalindrom (string) {
   const modeString = string.toLowerCase().replaceAll(' ', '');
   let reverseString = '';
   for (let i = modeString.length - 1; i >= 0 ; i--) {
@@ -11,17 +11,17 @@ function checkPolindrom (string) {
   }
   return reverseString === modeString;
 }
-checkPolindrom ('ДовОд');
+checkPalindrom ('ДовОд');
 
 function getNumber (string) {
   const allSymbol = string.replaceAll(' ', '');
-  let onlynumbers = '';
+  let onlyNumbers = '';
   for (let i = 0; i < allSymbol.length; i++) {
     if (!Number.isNaN(parseInt(allSymbol[i], 10))) {
-      onlynumbers += allSymbol[i];
+      onlyNumbers += allSymbol[i];
     }
   }
-  return parseInt(onlynumbers, 10);
+  return parseInt(onlyNumbers, 10);
 }
 getNumber('3v cs267');
 
