@@ -1,5 +1,5 @@
 //массив случайных описаний фотографии
-const DESCRIPTION_PHOTO = [
+const DESCRIPTION_PHOTOS = [
   'Пляж',
   'Море',
   'Пальма',
@@ -7,7 +7,7 @@ const DESCRIPTION_PHOTO = [
 ];
 
 //массив случайных комментариев
-const TEXT_COMMENT = [
+const TEXT_COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -52,30 +52,30 @@ const generateCommentId = createIdGenerator();
 
 //создание комментария
 const createCommentsPhoto = function () {
-  const CommentId = generateCommentId();
+  const commentId = generateCommentId();
   const randomIdIndexAvatar = getRandomInteger(1, 6);
-  const randomIdIndexComment = getRandomInteger(0, TEXT_COMMENT.length - 1);
+  const randomIdIndexComment = getRandomInteger(0, TEXT_COMMENTS.length - 1);
   const randomIdIndexNames = getRandomInteger(0, NAME_COMMENTATORS.length - 1);
 
   return {
-    id: CommentId,
+    id: commentId,
     avatar: `img/avatar-${ randomIdIndexAvatar }.svg`,
-    message: TEXT_COMMENT[randomIdIndexComment],
+    message: TEXT_COMMENTS[randomIdIndexComment],
     name: NAME_COMMENTATORS[randomIdIndexNames],
   };
 };
 
 //создание описания фотографии
 const createDescriptionPhoto = function () {
-  const PhotoId = generatePhotoId();
+  const photoId = generatePhotoId();
   const randomLikesIndex = getRandomInteger(15, 200);
-  const randomDescriptionIndex = getRandomInteger(0, DESCRIPTION_PHOTO.length - 1);
+  const randomDescriptionIndex = getRandomInteger(0, DESCRIPTION_PHOTOS.length - 1);
   const randomComment = createCommentsPhoto();
 
   return {
-    id: PhotoId,
-    url: `photos/${ PhotoId }.jpg`,
-    description: DESCRIPTION_PHOTO[randomDescriptionIndex],
+    id: photoId,
+    url: `photos/${ photoId }.jpg`,
+    description: DESCRIPTION_PHOTOS[randomDescriptionIndex],
     likes: randomLikesIndex,
     comments: randomComment,
   };
