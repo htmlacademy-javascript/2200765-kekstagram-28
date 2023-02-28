@@ -3,7 +3,7 @@ function checkLength (string, length) {
 }
 checkLength('Some string', 4);
 
-function checkPalindrom (string) {
+function checkPalindrome (string) {
   const modeString = string.toLowerCase().replaceAll(' ', '');
   let reverseString = '';
   for (let i = modeString.length - 1; i >= 0 ; i--) {
@@ -11,7 +11,7 @@ function checkPalindrom (string) {
   }
   return reverseString === modeString;
 }
-checkPalindrom ('ДовОд');
+checkPalindrome ('ДовОд');
 
 function getNumber (string) {
   const allSymbol = string.replaceAll(' ', '');
