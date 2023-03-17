@@ -64,6 +64,4 @@ const createDescriptionPhoto = function () {
   };
 };
 
-const createDescriptionAllPhoto = Array.from({length: COUNT_PHOTO}, createDescriptionPhoto);
-
-export {createDescriptionAllPhoto};
+export const createDescriptionAllPhoto = () => Array.from({length: COUNT_PHOTO}, createDescriptionPhoto);

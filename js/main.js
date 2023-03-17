@@ -1,4 +1,5 @@
 import {createDescriptionAllPhoto} from './data.js';
 
-// eslint-disable-next-line no-console
-console.log(createDescriptionAllPhoto());
+import {renderThumbnails} from './thumbnail.js';
+
+renderThumbnails(createDescriptionAllPhoto());
