@@ -17,4 +17,6 @@ function createIdGenerator() {
   };
 }
 
-export {getRandomInteger, createIdGenerator};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInteger, createIdGenerator, isEscapeKey};

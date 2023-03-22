@@ -28,6 +28,8 @@ const NAME_COMMENTATORS = [
 ];
 
 const COUNT_PHOTO = 25;
+const COMMENT_MIN = 1;
+const COMMENT_MAX = 15;
 
 //переменные для генерации id
 const generatePhotoId = createIdGenerator();
@@ -48,12 +50,15 @@ const createCommentsForPhoto = function () {
   };
 };
 
+//получаем случайное число комментариев
+const getRandomNumberComments = () => Array.from({length: getRandomInteger(COMMENT_MIN, COMMENT_MAX)}, createCommentsForPhoto);
+
 //создание описания фотографии
 const createDescriptionPhoto = function () {
   const photoId = generatePhotoId();
   const randomLikesIndex = getRandomInteger(15, 200);
   const randomDescriptionIndex = getRandomInteger(0, DESCRIPTION_PHOTOS.length - 1);
-  const randomComment = createCommentsForPhoto();
+  const randomComment = getRandomNumberComments();
 
   return {
     id: photoId,

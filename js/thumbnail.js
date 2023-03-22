@@ -6,13 +6,14 @@ const templatePicture = document
 //нашли контейнер для изображений от других пользователей
 const pictureContainer = document.querySelector('.pictures');
 
-const createThumbnail = ({ url, description, comments, likes }) => {
+const createThumbnail = ({ url, description, comments, likes, id }) => {
   const userPicture = templatePicture.cloneNode(true);
 
   userPicture.querySelector('.picture__img').src = url;
   userPicture.querySelector('.picture__img').alt = description;
   userPicture.querySelector('.picture__comments').textContent = comments.length;
   userPicture.querySelector('.picture__likes').textContent = likes;
+  userPicture.dataset.thumbnailId = id;
 
   return userPicture;
 };
@@ -26,4 +27,4 @@ const renderThumbnails = (pictures) => {
   pictureContainer.append(fragment);
 };
 
-export {renderThumbnails};
+export { renderThumbnails };
