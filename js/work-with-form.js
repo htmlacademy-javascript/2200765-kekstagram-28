@@ -1,5 +1,6 @@
 import { isEscapeKey } from './util.js';
 import './scale.js';
+import './slider.js';
 
 //регулярка для хэштэга
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
