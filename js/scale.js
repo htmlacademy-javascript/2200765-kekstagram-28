@@ -11,38 +11,38 @@ const buttonSmaller = document.querySelector('.scale__control--smaller');
 //кнопка увеличения масштаба
 const buttonBigger = document.querySelector('.scale__control--bigger');
 //поле с масштабом
-const fieldScale = document.querySelector('.scale__control--value');
-//шаблонное фото
-const imagePreview = document.querySelector('.img-upload__preview img');
+const scaleInput = document.querySelector('.scale__control--value');
+//загруженная картинка
+const uploadPhoto = document.querySelector('.img-upload__preview img');
 
 //преобразуем значение в число
-const getScaleValue = () => parseInt(fieldScale.value, 10);
+const getScaleValue = () => parseInt(scaleInput.value, 10);
 
 //изменение масштаба фото
 const changeScalePhoto = () => {
-  imagePreview.style.transform = `scale(${getScaleValue() / 100})`;
+  uploadPhoto.style.transform = `scale(${getScaleValue() / 100})`;
 };
 
 //уменьшение масштаба
 const reduceScale = () => {
-  fieldScale.value = `${getScaleValue() - STEP_SCALE}%`;
+  scaleInput.value = `${getScaleValue() - STEP_SCALE}%`;
 };
 
-function onButtonSmaller() {
+function onButtonSmallerClick () {
   if (getScaleValue() > MIN_SCALE) {
     reduceScale();
     changeScalePhoto();
   }
 }
 
-buttonSmaller.addEventListener('click', onButtonSmaller);
+buttonSmaller.addEventListener('click', onButtonSmallerClick);
 
 //увеличение масштаба
 const increaseScale = () => {
-  fieldScale.value = `${getScaleValue() + STEP_SCALE}%`;
+  scaleInput.value = `${getScaleValue() + STEP_SCALE}%`;
 };
 
-function onButtonBigger(evt) {
+function onButtonBiggerClick (evt) {
   evt.preventDefault();
 
   if (getScaleValue() < MAX_SCALE) {
@@ -51,4 +51,4 @@ function onButtonBigger(evt) {
   }
 }
 
-buttonBigger.addEventListener('click', onButtonBigger);
+buttonBigger.addEventListener('click', onButtonBiggerClick);

@@ -3,7 +3,7 @@ import './scale.js';
 import './slider.js';
 
 //регулярка для хэштэга
-const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
+const REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 //макс число хэштэгов
 const MAX_COUNT_HASHTAG = 5;
 
@@ -42,11 +42,11 @@ imgUploadCancel.addEventListener('click', () => {
 });
 
 //отменяем закрытие при активном поле хэштэга или коммента
-const activeFieldInput = () => document.activeElement === hashtagField || document.activeElement === commentField;
+const isFieldInputActive = () => document.activeElement === hashtagField || document.activeElement === commentField;
 
 //закрытие большого фото на клавишу Esc
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt) && !activeFieldInput()) {
+  if (isEscapeKey(evt) && !isFieldInputActive()) {
     evt.preventDefault();
     closeFormEditing();
   }
@@ -62,8 +62,8 @@ const pristine = new Pristine(imgUploadForm, {
 
 //проверка посимвольно
 function validateHashtag (value) {
-  const hashArray = value.split(' ');
-  return !value.length ? true : hashArray.every((hashtag) => VALID_HASHTAG.test(hashtag));
+  const hashtagsArray = value.split(' ');
+  return !value.length ? true : hashtagsArray.every((hashtags) => REGEXP.test(hashtags));
 }
 
 pristine.addValidator(
@@ -75,8 +75,8 @@ pristine.addValidator(
 
 //проверка на число тэгов
 function validateHashtagCount (value) {
-  const hashArray = value.split(' ');
-  return hashArray.length <= MAX_COUNT_HASHTAG;
+  const hashtagsArray = value.split(' ');
+  return hashtagsArray.length <= MAX_COUNT_HASHTAG;
 }
 
 pristine.addValidator(
@@ -87,8 +87,8 @@ pristine.addValidator(
 
 //проверка на повторения тэгов
 function validateHashtagDublicates (value) {
-  const hashArray = value.toLowerCase().split(' ');
-  return new Set(hashArray).size === hashArray.length;
+  const hashtagsArray = value.toLowerCase().split(' ');
+  return new Set(hashtagsArray).size === hashtagsArray.length;
 }
 
 pristine.addValidator(
@@ -111,4 +111,3 @@ imgUploadForm.addEventListener('submit', (evt) => {
 });
 
 export { showFormEditing };
-
