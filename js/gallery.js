@@ -3,7 +3,7 @@ import { showBigPicture } from './big-picture.js';
 
 const container = document.querySelector('.pictures');
 
-const renderGallery = (pictures) => {
+const addClickListenerAndRenderGallery = (pictures) => {
   container.addEventListener('click', (evt) => {
     const thumbnail = evt.target.closest('[data-thumbnail-id]');
     if (!thumbnail) {
@@ -19,4 +19,4 @@ const renderGallery = (pictures) => {
   renderThumbnails(pictures, container);
 };
 
-export { renderGallery };
+export { addClickListenerAndRenderGallery };
