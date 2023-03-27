@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, showAlert } from './util.js';
 import './scale.js';
 import './slider.js';
 
@@ -104,10 +104,34 @@ imgUploadFile.addEventListener('change', () => {
 });
 
 //обработчик на форму
-imgUploadForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
-  }
-});
 
-export { showFormEditing };
+const setUserFormSubmit = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      const formData = new FormData(evt.target);
+
+      fetch(
+        'https://28.javascript.pages.academy/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      )
+        .then((response) => {
+          if(response.ok) {
+            onSuccess();
+          } else {
+            throw new Error('Данные невалидны');
+          }
+        })
+        .catch((err) => {
+          showAlert(err.message);
+        });
+    }
+  });
+};
+
+export { showFormEditing, setUserFormSubmit, closeFormEditing };
