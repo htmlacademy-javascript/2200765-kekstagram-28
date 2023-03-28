@@ -1,11 +1,17 @@
 import { isEscapeKey, showAlert } from './util.js';
 import './scale.js';
 import './slider.js';
+import {sendData} from './api.js';
 
 //регулярка для хэштэга
 const REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 //макс число хэштэгов
 const MAX_COUNT_HASHTAG = 5;
+//состояния для кнопок отправки формы
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Загружаю...'
+};
 
 //открытие формы
 const imgUploadFile = document.querySelector('#upload-file');
@@ -21,6 +27,8 @@ const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const hashtagField = imgUploadForm.querySelector('.text__hashtags');
 //поле описания
 const commentField = imgUploadForm.querySelector('.text__description');
+//кнопка отправки формы
+const submitButton = document.querySelector('.img-upload__submit');
 
 //открываем форму для редактирования фото
 const showFormEditing = () => {
@@ -103,33 +111,33 @@ imgUploadFile.addEventListener('change', () => {
   showFormEditing();
 });
 
-//обработчик на форму
+//блокирует кнопку при отправке
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+//разблокирует
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
+
+//обработчик на форму
 const setUserFormSubmit = (onSuccess) => {
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     const isValid = pristine.validate();
     if (isValid) {
-      const formData = new FormData(evt.target);
-
-      fetch(
-        'https://28.javascript.pages.academy/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      )
-        .then((response) => {
-          if(response.ok) {
-            onSuccess();
-          } else {
-            throw new Error('Данные невалидны');
-          }
-        })
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
         .catch((err) => {
           showAlert(err.message);
-        });
+        }
+        )
+        .finally(unblockSubmitButton);
     }
   });
 };
