@@ -1,7 +1,9 @@
-import { isEscapeKey, showAlert } from './util.js';
+import { isEscapeKey } from './util.js';
 import './scale.js';
 import './slider.js';
 import {sendData} from './api.js';
+import { showSuccessSendData, showErrorSendData } from './messages.js';
+import { deleteSlider } from './slider.js';
 
 //регулярка для хэштэга
 const REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -41,6 +43,8 @@ const showFormEditing = () => {
 const closeFormEditing = () => {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
+  imgUploadForm.reset();
+  deleteSlider();
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
@@ -122,7 +126,6 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-
 //обработчик на форму
 const setUserFormSubmit = (onSuccess) => {
   imgUploadForm.addEventListener('submit', (evt) => {
@@ -133,10 +136,8 @@ const setUserFormSubmit = (onSuccess) => {
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(onSuccess)
-        .catch((err) => {
-          showAlert(err.message);
-        }
-        )
+        .then(showSuccessSendData)
+        .catch(showErrorSendData)
         .finally(unblockSubmitButton);
     }
   });

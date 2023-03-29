@@ -1,12 +1,8 @@
 import './work-with-form.js';
-
 import { getData } from './api.js';
-
 import { setUserFormSubmit, closeFormEditing } from './work-with-form.js';
-
-import { showAlert } from './util.js';
-
 import { addClickListenerAndRenderGallery } from './gallery.js';
+import { showErrorGetData } from './messages.js';
 
 
 getData()
@@ -15,7 +11,7 @@ getData()
   })
   .catch(
     (err) => {
-      showAlert(err.message);
+      showErrorGetData(err.message);
     }
   );
 
