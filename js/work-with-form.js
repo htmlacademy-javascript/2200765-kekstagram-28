@@ -1,11 +1,19 @@
 import { isEscapeKey } from './util.js';
 import './scale.js';
 import './slider.js';
+import {sendData} from './api.js';
+import { showSuccessSendData, showErrorSendData } from './messages.js';
+import { deleteSlider } from './slider.js';
 
 //регулярка для хэштэга
 const REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 //макс число хэштэгов
 const MAX_COUNT_HASHTAG = 5;
+//состояния для кнопок отправки формы
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Загружаю...'
+};
 
 //открытие формы
 const imgUploadFile = document.querySelector('#upload-file');
@@ -21,6 +29,8 @@ const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const hashtagField = imgUploadForm.querySelector('.text__hashtags');
 //поле описания
 const commentField = imgUploadForm.querySelector('.text__description');
+//кнопка отправки формы
+const submitButton = document.querySelector('.img-upload__submit');
 
 //открываем форму для редактирования фото
 const showFormEditing = () => {
@@ -33,6 +43,8 @@ const showFormEditing = () => {
 const closeFormEditing = () => {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
+  imgUploadForm.reset();
+  deleteSlider();
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
@@ -103,11 +115,32 @@ imgUploadFile.addEventListener('change', () => {
   showFormEditing();
 });
 
-//обработчик на форму
-imgUploadForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
-  }
-});
+//блокирует кнопку при отправке
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+//разблокирует
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
-export { showFormEditing };
+//обработчик на форму
+const setUserFormSubmit = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .then(showSuccessSendData)
+        .catch(showErrorSendData)
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+export { showFormEditing, setUserFormSubmit, closeFormEditing };

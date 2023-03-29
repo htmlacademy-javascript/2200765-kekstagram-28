@@ -1,3 +1,4 @@
+
 // получение случайных чисел
 function getRandomInteger (min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
@@ -19,4 +20,4 @@ function createIdGenerator() {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, createIdGenerator, isEscapeKey};
+export {getRandomInteger, createIdGenerator, isEscapeKey };

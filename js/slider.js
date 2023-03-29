@@ -99,3 +99,5 @@ const onApplyEffectClick = (evt) => {
 };
 
 effectsList.addEventListener('change', onApplyEffectClick);
+
+export { deleteSlider };
