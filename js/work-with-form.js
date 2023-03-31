@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 import './scale.js';
 import './slider.js';
-import {sendData} from './api.js';
+import { sendData } from './api.js';
 import { showSuccessSendData, showErrorSendData } from './messages.js';
 import { deleteSlider } from './slider.js';
 
@@ -58,7 +58,8 @@ const isFieldInputActive = () => document.activeElement === hashtagField || docu
 
 //закрытие большого фото на клавишу Esc
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt) && !isFieldInputActive()) {
+  const errorPopup = document.querySelector('.error');
+  if (!errorPopup && isEscapeKey(evt) && !isFieldInputActive()) {
     evt.preventDefault();
     closeFormEditing();
   }

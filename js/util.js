@@ -18,6 +18,15 @@ function createIdGenerator() {
   };
 }
 
+//функция для устранения дребезга
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, createIdGenerator, isEscapeKey };
+export { getRandomInteger, createIdGenerator, isEscapeKey, debounce };
