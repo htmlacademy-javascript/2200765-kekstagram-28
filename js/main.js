@@ -1,3 +1,4 @@
+import './uploading-picture.js';
 import './work-with-form.js';
 import { getData } from './api.js';
 import { setUserFormSubmit, closeFormEditing } from './work-with-form.js';
