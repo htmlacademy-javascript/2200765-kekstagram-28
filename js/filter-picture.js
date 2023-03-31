@@ -1,3 +1,4 @@
+import { debounce } from './util.js';
 
 //форма с фильтрами
 const formFilterPictures = document.querySelector('.img-filters__form');
@@ -20,38 +21,38 @@ const removeActiveClassButton = () => {
 
 //по умолчанию
 const setDefaultClick = (cb) => {
-  defaultFilterButton.addEventListener ('click', (evt) => {
+  defaultFilterButton.addEventListener ('click', debounce((evt) => {
     removeActiveClassButton();
     if (evt.target === defaultFilterButton) {
       defaultFilterButton.classList.add('img-filters__button--active');
       removePictures(document.querySelectorAll('.picture'));
       cb();
     }
-  });
+  }));
 };
 
 //случайные
 const setRandomClick = (cb) => {
-  randomFilterButton.addEventListener ('click', (evt) => {
+  randomFilterButton.addEventListener ('click', debounce((evt) => {
     removeActiveClassButton();
     if (evt.target === randomFilterButton) {
       randomFilterButton.classList.add('img-filters__button--active');
       removePictures(document.querySelectorAll('.picture'));
       cb();
     }
-  });
+  }));
 };
 
 //обсуждаемые
 const setDiscussedClick = (cb) => {
-  discussedFilterButton.addEventListener ('click', (evt) => {
+  discussedFilterButton.addEventListener ('click', debounce((evt) => {
     removeActiveClassButton();
     if (evt.target === discussedFilterButton) {
       discussedFilterButton.classList.add('img-filters__button--active');
       removePictures(document.querySelectorAll('.picture'));
       cb();
     }
-  });
+  }));
 };
 
 //сортировка рандомная
