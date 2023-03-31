@@ -29,4 +29,4 @@ function debounce (callback, timeoutDelay = 500) {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, createIdGenerator, isEscapeKey, debounce };
+export { getRandomInteger, createIdGenerator, isEscapeKey, debounce };

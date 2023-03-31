@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 import './scale.js';
 import './slider.js';
-import {sendData} from './api.js';
+import { sendData } from './api.js';
 import { showSuccessSendData, showErrorSendData } from './messages.js';
 import { deleteSlider } from './slider.js';
 
