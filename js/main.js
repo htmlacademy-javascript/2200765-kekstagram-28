@@ -1,3 +1,4 @@
+import './uploading-picture.js';
 import './work-with-form.js';
 import { getData } from './api.js';
 import { setUserFormSubmit, closeFormEditing } from './work-with-form.js';
@@ -5,6 +6,7 @@ import { addClickListenerAndRenderGallery } from './gallery.js';
 import { showErrorGetData } from './messages.js';
 import './filter-picture.js';
 import { setRandomClick, setDefaultClick, setDiscussedClick, sortRandomly, compareComments } from './filter-picture.js';
+
 
 getData()
   .then((usersPictures) => {
