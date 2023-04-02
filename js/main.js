@@ -1,18 +1,23 @@
-import './uploading-picture.js';
 import './work-with-form.js';
-import { getData } from './api.js';
-import { setUserFormSubmit, closeFormEditing } from './work-with-form.js';
-import { addClickListenerAndRenderGallery } from './gallery.js';
-import { showErrorGetData } from './messages.js';
 import './filter-picture.js';
-import { setRandomClick, setDefaultClick, setDiscussedClick, sortRandomly, compareComments } from './filter-picture.js';
+import './uploading-picture.js';
+import { getData } from './api.js';
+import { showErrorGetData } from './messages.js';
+import { addClickListenerAndRenderGallery } from './gallery.js';
+import { setUserFormSubmit, closeFormEditing } from './work-with-form.js';
+import { setDefaultFilterClick, setRandomFilterClick, setDiscussedFilterClick, compareRandomly, compareComments } from './filter-picture.js';
 
+//панель фильтров
+const filterPictures = document.querySelector('.img-filters');
+
+//получаем данные, отрисовываем галлерею, показываем панель фильтров
 getData()
   .then((usersPictures) => {
     addClickListenerAndRenderGallery(usersPictures);
-    setDefaultClick(() => addClickListenerAndRenderGallery(usersPictures));
-    setRandomClick(() => addClickListenerAndRenderGallery(usersPictures.slice().sort(sortRandomly).slice(0,10)));
-    setDiscussedClick(() => addClickListenerAndRenderGallery(usersPictures.slice().sort(compareComments)));
+    filterPictures.classList.remove('img-filters--inactive');
+    setDefaultFilterClick(() => addClickListenerAndRenderGallery(usersPictures));
+    setRandomFilterClick(() => addClickListenerAndRenderGallery(usersPictures.slice().sort(compareRandomly).slice(0,10)));
+    setDiscussedFilterClick(() => addClickListenerAndRenderGallery(usersPictures.slice().sort(compareComments)));
   })
   .catch(
     (err) => {

@@ -1,4 +1,4 @@
-//фильтры с настройками
+//параметры фильтров
 const FILTER_EFFECTS = {
   none: { filter: 'none', min: 0, max: 100, step: 1, unit: '', },
   chrome: { filter: 'grayscale', min: 0, max: 1, step: 0.1, unit: '', },

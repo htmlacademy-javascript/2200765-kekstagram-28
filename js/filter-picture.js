@@ -20,7 +20,7 @@ const removeActiveClassButton = () => {
 };
 
 //по умолчанию
-const setDefaultClick = (cb) => {
+const setDefaultFilterClick = (cb) => {
   defaultFilterButton.addEventListener ('click', debounce((evt) => {
     removeActiveClassButton();
     if (evt.target === defaultFilterButton) {
@@ -32,7 +32,7 @@ const setDefaultClick = (cb) => {
 };
 
 //случайные
-const setRandomClick = (cb) => {
+const setRandomFilterClick = (cb) => {
   randomFilterButton.addEventListener ('click', debounce((evt) => {
     removeActiveClassButton();
     if (evt.target === randomFilterButton) {
@@ -44,7 +44,7 @@ const setRandomClick = (cb) => {
 };
 
 //обсуждаемые
-const setDiscussedClick = (cb) => {
+const setDiscussedFilterClick = (cb) => {
   discussedFilterButton.addEventListener ('click', debounce((evt) => {
     removeActiveClassButton();
     if (evt.target === discussedFilterButton) {
@@ -56,7 +56,7 @@ const setDiscussedClick = (cb) => {
 };
 
 //сортировка рандомная
-const sortRandomly = () => Math.random() - 0.5;
+const compareRandomly = () => Math.random() - 0.5;
 
 //сортировка по комментам
 const compareComments = (pictureA, pictureB) => {
@@ -65,4 +65,4 @@ const compareComments = (pictureA, pictureB) => {
   return rankB - rankA;
 };
 
-export { sortRandomly, compareComments, setDefaultClick, setRandomClick, setDiscussedClick };
+export { compareRandomly, compareComments, setDefaultFilterClick, setRandomFilterClick, setDiscussedFilterClick };

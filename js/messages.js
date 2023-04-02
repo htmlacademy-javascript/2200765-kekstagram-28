@@ -13,13 +13,13 @@ const showErrorGetData = (error) => {
   document.addEventListener('keydown', onDocumentKeydownError);
   messageTemp.querySelector('.error__button').classList.add('hidden');
   document.body.append(messageTemp);
+
   setTimeout(() => {
     messageTemp.remove();
   }, 5000);
 };
 
 //сообщение об ошибке отправки данных
-
 //закрываем окно ошибки
 const closeErrorPopup = () => {
   document.removeEventListener('keydown', onDocumentKeydownError);
@@ -52,7 +52,6 @@ function onDocumentKeydownError(evt) {
 }
 
 //сообщение об успешной отправки данных
-
 //закрываем окно успешной отправки
 const closeSuccessPopup = () => {
   document.removeEventListener('keydown', onDocumentKeydownSuccess);
