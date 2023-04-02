@@ -1,9 +1,9 @@
-import { isEscapeKey } from './util.js';
 import './scale.js';
 import './slider.js';
 import { sendData } from './api.js';
-import { showSuccessSendData, showErrorSendData } from './messages.js';
+import { isEscapeKey } from './util.js';
 import { deleteSlider } from './slider.js';
+import { showSuccessSendData, showErrorSendData } from './messages.js';
 
 //регулярка для хэштэга
 const REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;

@@ -27,7 +27,6 @@ const body = document.querySelector('body');
 let currentCommentsCount = COMMENTS_PER_PORTION;
 let updateLoadMoreClick;
 
-
 //закрываем большое фото
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
