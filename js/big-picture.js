@@ -25,14 +25,13 @@ const loadCommentsButton = bigPicture.querySelector('.comments-loader');
 const body = document.querySelector('body');
 
 let currentCommentsCount = COMMENTS_PER_PORTION;
-let updateLoadMoreClick;
 
 //закрываем большое фото
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  commentsContainer.innerHTML = '';
   document.removeEventListener('keydown', onDocumentKeydown);
+  loadCommentsButton.onclick = null;
 };
 
 //закрытие большого фото по крестику
@@ -60,6 +59,10 @@ const createComment = (comment) => {
 //создаем список комментариев
 const renderComments = (comments) => {
   const commentsFragment = document.createDocumentFragment();
+  const getMoreComments = () => {
+    currentCommentsCount += COMMENTS_PER_PORTION;
+    renderComments(comments);
+  };
   comments.slice(0, currentCommentsCount).forEach((comment) => {
     commentsFragment.append(createComment(comment));
   });
@@ -68,9 +71,9 @@ const renderComments = (comments) => {
   if (currentCommentsCount >= comments.length) {
     currentCommentsCount = comments.length;
     loadCommentsButton.classList.add('hidden');
-    loadCommentsButton.removeEventListener('click', updateLoadMoreClick);
   } else {
     loadCommentsButton.classList.remove('hidden');
+    loadCommentsButton.onclick = getMoreComments;
   }
   commentsCount.textContent = `${currentCommentsCount} из ${comments.length} комментариев`;
 };
@@ -83,16 +86,11 @@ const showBigPicture = (picture) => {
   commentsContainer.innerHTML = '';
   document.addEventListener('keydown', onDocumentKeydown);
   currentCommentsCount = COMMENTS_PER_PORTION;
+  commentsContainer.innerHTML = '';
   bigPictureImg.src = picture.url;
   bigPictureLikes.textContent = picture.likes;
   photoCaption.textContent = picture.description;
   bigPictureComments.textContent = picture.comments.length;
-
-  updateLoadMoreClick = () => {
-    currentCommentsCount += COMMENTS_PER_PORTION;
-    renderComments(picture.comments);
-  };
-  loadCommentsButton.addEventListener('click', updateLoadMoreClick);
   renderComments(picture.comments);
 };
 
