@@ -2,7 +2,7 @@ import './scale.js';
 import './slider.js';
 import { sendData } from './api.js';
 import { isEscapeKey } from './util.js';
-import { deleteSlider } from './slider.js';
+import { hideSlider } from './slider.js';
 import { showSuccessSendData, showErrorSendData } from './messages.js';
 
 //регулярка для хэштэга
@@ -44,7 +44,7 @@ const closeFormEditing = () => {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   imgUploadForm.reset();
-  deleteSlider();
+  hideSlider();
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
