@@ -28,7 +28,7 @@ const closeErrorPopup = () => {
 };
 
 //закрываем по клику вне окна
-const onOutSideErrorClick = (evt) => {
+const closeErrorOutSideClick = (evt) => {
   const errorPopup = document.querySelector('.error__inner');
   if (evt.target !== errorPopup) {
     closeErrorPopup();
@@ -40,7 +40,7 @@ const showErrorSendData = () => {
   const messageTemp = messageError.cloneNode(true);
   messageTemp.querySelector('.error__button').addEventListener('click', closeErrorPopup);
   document.addEventListener('keydown', onDocumentKeydownError);
-  document.addEventListener('click', onOutSideErrorClick, { once: true });
+  document.addEventListener('click', closeErrorOutSideClick, { once: true });
   document.body.append(messageTemp);
 };
 
@@ -60,7 +60,7 @@ const closeSuccessPopup = () => {
 };
 
 //закрываем по клику вне окна
-const onOutSideSuccessClick = (evt) => {
+const closeSuccessPopupOutSideClick = (evt) => {
   const successPopup = document.querySelector('.success__inner');
   if (evt.target !== successPopup) {
     closeSuccessPopup();
@@ -72,7 +72,7 @@ const showSuccessSendData = () => {
   const messageTemp = messageSuccess.cloneNode(true);
   messageTemp.querySelector('.success__button').addEventListener('click', closeSuccessPopup);
   document.addEventListener('keydown', onDocumentKeydownSuccess);
-  document.addEventListener('click', onOutSideSuccessClick, { once: true });
+  document.addEventListener('click', closeSuccessPopupOutSideClick, { once: true });
   document.body.append(messageTemp);
 };
 

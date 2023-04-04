@@ -29,7 +29,7 @@ const showSlider = (selectedEffect) => {
 };
 
 //удаляем слайдер при оригинале
-const deleteSlider = () => {
+const hideSlider = () => {
   uploadPhoto.style = null;
   uploadPhoto.className = '';
   showSlider(false);
@@ -87,10 +87,10 @@ const updateEffectSlider = (selectedEffect) => {
 };
 
 //обработчик на выбор фильтра
-const onApplyEffectClick = (evt) => {
+const applyEffectClick = (evt) => {
   const selectedFilter = evt.target.value;
   if (selectedFilter === 'none') {
-    deleteSlider();
+    hideSlider();
   } else {
     showSlider(true);
     uploadPhoto.classList.add(`effects__preview--${selectedFilter}`);
@@ -98,6 +98,6 @@ const onApplyEffectClick = (evt) => {
   updateEffectSlider(selectedFilter);
 };
 
-effectsList.addEventListener('change', onApplyEffectClick);
+effectsList.addEventListener('change', applyEffectClick);
 
-export { deleteSlider };
+export { hideSlider };
