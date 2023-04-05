@@ -1,5 +1,8 @@
-//import { debounce } from './util.js';
+import { debounce } from './util.js';
+import { renderThumbnails } from './thumbnail.js';
 
+//контйенер с фильтрами
+const filterContainer = document.querySelector('.img-filters');
 //форма с фильтрами
 const formFilterPictures = document.querySelector('.img-filters__form');
 //кнопка по умолчанию
@@ -9,60 +12,43 @@ const randomFilterButton = formFilterPictures.querySelector('#filter-random');
 //кнопка обсуждаемые
 const discussedFilterButton = formFilterPictures.querySelector('#filter-discussed');
 
+//показать форму с фильтрами
+const showFilters = () => filterContainer.classList.remove('img-filters--inactive');
 
 //удаление картинок
-const removePictures = (usersPictures) => usersPictures.forEach((picture) => picture.remove());
+const removeThumbnails = (thumbnails) => thumbnails.forEach((thumbnail) => thumbnail.remove());
 
-//перекидывание активного класса
-const removeActiveClassButton = () => {
-  const activeButton = document.querySelector('.img-filters__button--active');
-  activeButton.classList.remove('img-filters__button--active');
+//рандомная сортировка
+const sortRandom = () => Math.random() - 0.5;
+
+//сортировка комментов
+const sortByCommentCount = (a, b) => b.comments.length - a.comments.length;
+
+const filterPhotos = (photos, filterBtn) => {
+  if (filterBtn === defaultFilterButton) {
+    return photos;
+  } else if (filterBtn === randomFilterButton) {
+    return photos.slice().sort(sortRandom).slice(0, 10);
+  } else if (filterBtn === discussedFilterButton) {
+    return photos.slice().sort(sortByCommentCount);
+  }
 };
 
-//по умолчанию
-const setDefaultFilterClick = (cb) => {
-  defaultFilterButton.addEventListener ('click', (evt) => {
-    removeActiveClassButton();
-    if (evt.target === defaultFilterButton) {
-      defaultFilterButton.classList.add('img-filters__button--active');
-      removePictures(document.querySelectorAll('.picture'));
-      cb();
-    }
-  });
+const handleFilterButtonClick = (event, photos) => {
+  const thumbnails = document.querySelectorAll('.picture');
+  const filterBtn = event.target;
+  defaultFilterButton.classList.remove('img-filters__button--active');
+  randomFilterButton.classList.remove('img-filters__button--active');
+  discussedFilterButton.classList.remove('img-filters__button--active');
+  filterBtn.classList.add('img-filters__button--active');
+  removeThumbnails(thumbnails);
+  renderThumbnails(filterPhotos(photos, filterBtn));
 };
 
-//случайные
-const setRandomFilterClick = (cb) => {
-  randomFilterButton.addEventListener ('click', (evt) => {
-    removeActiveClassButton();
-    if (evt.target === randomFilterButton) {
-      randomFilterButton.classList.add('img-filters__button--active');
-      removePictures(document.querySelectorAll('.picture'));
-      cb();
-    }
-  });
+const setupFiltering = (photos) => {
+  formFilterPictures.addEventListener('click', debounce((event) => {
+    handleFilterButtonClick(event, photos);
+  }));
 };
 
-//обсуждаемые
-const setDiscussedFilterClick = (cb) => {
-  discussedFilterButton.addEventListener ('click', (evt) => {
-    removeActiveClassButton();
-    if (evt.target === discussedFilterButton) {
-      discussedFilterButton.classList.add('img-filters__button--active');
-      removePictures(document.querySelectorAll('.picture'));
-      cb();
-    }
-  });
-};
-
-//сортировка рандомная
-const compareRandomly = () => Math.random() - 0.5;
-
-//сортировка по комментам
-const compareComments = (pictureA, pictureB) => {
-  const rankA = pictureA.comments.length;
-  const rankB = pictureB.comments.length;
-  return rankB - rankA;
-};
-
-export { compareRandomly, compareComments, setDefaultFilterClick, setRandomFilterClick, setDiscussedFilterClick };
+export { setupFiltering, showFilters };
